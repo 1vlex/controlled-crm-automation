@@ -1,0 +1,13 @@
+dsl: v0.3
+flow: manual_template
+vars: {}
+steps:
+- id: search_deal
+  op: deal.search
+  input:
+    title: Quote for 600 Chairs
+- id: mark_lost
+  op: deal.mark_lost
+  input:
+    deal: ${search_deal.deal_id}
+    reason: budget rejected by client

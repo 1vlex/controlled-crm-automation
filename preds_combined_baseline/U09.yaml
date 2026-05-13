@@ -1,0 +1,13 @@
+dsl: v0.3
+flow: manual_template
+vars: {}
+steps:
+- id: search_stale_deals
+  op: deal.search_stale
+  input:
+    days_inactive: 0
+- id: reassign_deals
+  op: deal.update
+  input:
+    deals: ${deals}
+    salesperson: galiy.ivan2003@mail.r

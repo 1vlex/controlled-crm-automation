@@ -1,0 +1,15 @@
+dsl: v0.3
+flow: manual_template
+vars: {}
+steps:
+- id: search_deal
+  op: deal.search
+  input:
+    title: Interest in your products
+- id: create_activity
+  op: activity.create
+  input:
+    deal: ${search_deal.deal_id}
+    type: BizCallX
+    summary: Urgent callback from pipeline test
+    due: today 18:00

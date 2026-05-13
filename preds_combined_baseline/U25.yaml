@@ -1,0 +1,17 @@
+dsl: v0.3
+flow: manual_template
+vars: {}
+steps:
+- id: create_or_reuse_deal
+  op: deal.create
+  input:
+    title: 'Global Solutions: Furnitures'
+    budget: 4300
+    use_existing: true
+- id: add_tag
+  op: deal.add_tags
+  input:
+    deals:
+    - ${create_or_reuse_deal.id}
+    tags:
+    - ru_check_existing

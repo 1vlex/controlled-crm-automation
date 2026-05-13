@@ -1,0 +1,20 @@
+dsl: v0.3
+flow: eval_aligned_s24
+vars: {}
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: scenario24@example.com
+- id: s2_contact_tags
+  op: contact.update
+  input:
+    contact_id: ${contact.id}
+    tags:
+    - reference
+    - newsletter
+- id: s3_email
+  op: notify.email
+  input:
+    to: director@example.com
+    subject: Auto notification S24

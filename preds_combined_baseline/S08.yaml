@@ -1,0 +1,15 @@
+dsl: v0.3
+flow: eval_aligned_s08
+vars: {}
+steps:
+- id: s1_report
+  op: report.sales_daily
+  input:
+    period: today
+    group_by: salesperson
+- id: s2_email
+  op: notify.email
+  input:
+    to: director@example.com
+    subject: Auto notification S08
+    attach: ${file.path}

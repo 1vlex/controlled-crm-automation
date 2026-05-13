@@ -1,0 +1,30 @@
+dsl: v0.3
+flow: eval_aligned_s30
+vars: {}
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: scenario30@example.com
+- id: s2_deal
+  op: deal.create
+  input:
+    title: Scenario Deal S30
+    budget: 65000
+    force_create: true
+- id: s3_stage
+  op: deal.update_stage
+  input:
+    deal: ${s2_deal.id}
+    stage: Neww
+    probability: 40
+- id: s4_watchdog
+  op: watchdog
+  input:
+    deal: ${s2_deal.id}
+    condition: deal.status == 'won'
+- id: s5_email
+  op: notify.email
+  input:
+    to: director@example.com
+    subject: Auto notification S30

@@ -1,0 +1,13 @@
+dsl: v0.3
+flow: manual_template
+vars: {}
+steps:
+- id: search_deal
+  op: deal.search
+  input:
+    title: Access to Online Catalogg
+- id: watchdog_check
+  op: watchdog
+  input:
+    deal: ${search_deal.deal_id}
+    condition: deal.status == 'won'

@@ -1,0 +1,20 @@
+dsl: v0.3
+flow: eval_aligned_s03
+vars: {}
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: scenario03@example.com
+- id: s2_deal
+  op: deal.create
+  input:
+    title: Scenario Deal S03
+    budget: 24500
+    force_create: true
+- id: s3_stage
+  op: deal.update_stage
+  input:
+    deal: ${s2_deal.id}
+    stage: Proposotion
+    probability: 65

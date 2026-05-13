@@ -1,0 +1,19 @@
+dsl: v0.3
+flow: eval_aligned_s22
+vars: {}
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: scenario22@example.com
+- id: s2_deal
+  op: deal.create
+  input:
+    title: Scenario Deal S22
+    budget: 53000
+    force_create: true
+- id: s3_meeting
+  op: meeting.schedule
+  input:
+    deal: ${s2_deal.id}
+    when: tomorrow

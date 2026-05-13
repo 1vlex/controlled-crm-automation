@@ -1,0 +1,20 @@
+dsl: v0.3
+flow: eval_aligned_s01
+vars: {}
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    phone: +7 921 5501 01 07
+    email: scenario01@example.com
+- id: s2_deal
+  op: deal.create
+  input:
+    title: Scenario Deal S01
+    budget: 21500
+    force_create: true
+- id: s3_meeting
+  op: meeting.schedule
+  input:
+    deal: ${s2_deal.id}
+    when: tomorrow

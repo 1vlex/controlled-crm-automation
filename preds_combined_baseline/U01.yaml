@@ -1,0 +1,29 @@
+dsl: v0.3
+flow: manual_template
+vars: {}
+steps:
+- id: search_deal
+  op: deal.search
+  input:
+    title: 'Global Solutions: Furnitures'
+- id: update_stage
+  op: deal.update_stage
+  input:
+    deal: ${search_deal.deal_id}
+    stage: Propositon
+    probability: 72
+- id: add_tags
+  op: deal.add_tags
+  input:
+    deals:
+    - ${search_deal.deal_id}
+    tags:
+    - priority
+    - enterprise
+- id: create_activity
+  op: activity.create
+  input:
+    deal: ${search_deal.deal_id}
+    type: Call
+    summary: Call client for furniture specs
+    due: tomorrow 14:00

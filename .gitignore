@@ -1,0 +1,82 @@
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+odoo_ocr_docker/.env
+odoo_ocr_docker/.env.*
+!odoo_ocr_docker/.env.example
+SECRETS_INVENTORY.txt
+
+# Python cache and local tooling
+__pycache__/
+*.py[cod]
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Runtime logs, exports and generated runs
+logs/
+artifacts/
+backups/
+pipeline_runs/
+pipeline_runs_*/
+execution_runs/
+llm_runs/
+full_eval_runs/
+ablation_runs/
+ui_runs/
+video_runs/
+
+# Local dissertation text and presentation files
+ВКР_ТЕКСТ/
+Презентация Галий.pptx
+report_for_supervisor_execution_self_healing.*
+retrieval_rare_fewshot_examples.md
+
+# Older local datasets kept outside the public project snapshot
+manual_api_checks_with_baseline_odoo_API.csv
+nl_dsl_scenarios_odoo_API.csv
+self_healing_cases_odoo_API.csv
+video_3_scenarios_odoo_API.csv
+
+# LaTeX/build outputs if they appear outside ignored folders
+.texbuild/
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+# Extra local documents and archives
+*.zip
+*.docx
+*.pptx
+*.pdf
+*ВКР*
+*Презентац*
+
+# Extra local DB/cache files
+*.sqlite
+*.db
+*.sqlite3
+
+# Extra secrets
+*.key
+*.pem
+*.p12
+*.pfx

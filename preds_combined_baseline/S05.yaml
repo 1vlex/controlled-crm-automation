@@ -1,0 +1,27 @@
+dsl: v0.3
+flow: eval_aligned_s05
+vars: {}
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: scenario05@example.com
+- id: s2_contact_tags
+  op: contact.update
+  input:
+    contact_id: ${contact.id}
+    tags:
+    - VIP
+- id: s3_deal
+  op: deal.create
+  input:
+    title: Scenario Deal S05
+    budget: 27500
+    force_create: true
+- id: s4_activity
+  op: activity.create
+  input:
+    type: To Do
+    summary: Follow up with client
+    due: tomorrow
+    deal: ${s3_deal.id}

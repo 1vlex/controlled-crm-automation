@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Odoo CRM RPA</title>
+    <link rel="stylesheet" href="/styles.css?v=20260512-git-ready" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>Odoo CRM RPA</h1>
+        <p id="health">проверка подключения</p>
+      </div>
+      <div class="toolbar">
+        <button id="refreshContexts" class="ghost" type="button">Обновить журналы</button>
+        <button id="executeBtn" class="primary" type="button">Выполнить</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel input-panel">
+        <div class="panel-head">
+          <h2>Запрос</h2>
+          <select id="inputMode">
+            <option value="nl">Текст</option>
+            <option value="yaml">YAML DSL</option>
+          </select>
+        </div>
+        <textarea id="nlText" spellcheck="false">Найди сделку "Global Solutons: Furnitures"; переведи в стадию Proposotion; назначь менеджера galiy.ivan2003@mail.r; создай активность "self-heal проверка" на завтра; только эта сделка</textarea>
+        <textarea id="yamlText" class="hidden" spellcheck="false"></textarea>
+        <div class="request-actions">
+          <button id="inlinePreviewBtn" class="primary" type="button" title="Построить DSL, план и self-healing уточнения без записи в Odoo">Построить план</button>
+          <button id="inlineExecuteBtn" type="button" title="Сразу выполнить сценарий с текущими выбранными уточнениями">Выполнить сразу</button>
+        </div>
+        <div class="settings">
+          <label>Провайдер <input id="provider" value="groq" /></label>
+          <label>Модель <input id="model" value="llama-3.3-70b-versatile" /></label>
+          <label>Fallback <input id="fallbackProvider" value="openai" /></label>
+          <label>Fallback model <input id="fallbackModel" value="gpt-4o-mini" /></label>
+        </div>
+        <pre id="dslBox" class="codebox"></pre>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>План выполнения</h2>
+          <span id="validationBadge" class="badge">ожидает</span>
+        </div>
+        <div id="planList" class="list empty">План еще не построен</div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Уточнения self-healing</h2>
+          <span id="confirmBadge" class="badge">0</span>
+        </div>
+        <div id="confirmList" class="list empty">Нет рискованных исправлений</div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Результат запуска</h2>
+          <span id="resultBadge" class="badge">ожидает</span>
+        </div>
+        <div id="resultBox" class="result empty">Запуск еще не выполнялся</div>
+      </section>
+
+      <section class="panel rollback-panel">
+        <div class="panel-head">
+          <h2>Откат изменений</h2>
+          <div class="toolbar small">
+            <button id="refreshRollbackContexts" class="ghost" type="button">Обновить список</button>
+            <button id="previewRollback" class="ghost" type="button">Показать действия</button>
+            <button id="applyRollback" class="danger" type="button">Откатить все</button>
+          </div>
+        </div>
+        <div class="rollback-grid">
+          <div id="contextList" class="list compact empty">Журналы не загружены</div>
+          <div id="rollbackList" class="list compact empty">Выберите журнал и покажите действия отката</div>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast hidden"></div>
+    <script src="/app.js?v=20260512-git-ready"></script>
+  </body>
+</html>

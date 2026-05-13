@@ -1,0 +1,20 @@
+dsl: v0.3
+flow: eval_aligned_s13
+vars: {}
+steps:
+- id: s1_company
+  op: contact.create
+  input:
+    name: Scenario Company S13
+- id: s2_contact_tags
+  op: contact.update
+  input:
+    contact_id: ${company.id}
+    tags:
+    - b2b
+- id: s3_deal
+  op: deal.create
+  input:
+    title: Scenario Deal S13
+    budget: 39500
+    force_create: true

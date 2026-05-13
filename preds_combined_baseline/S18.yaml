@@ -1,0 +1,24 @@
+dsl: v0.3
+flow: eval_aligned_s18
+vars: {}
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: scenario18@example.com
+- id: s2_deal
+  op: deal.create
+  input:
+    title: Scenario Deal S18
+    budget: 47000
+    force_create: true
+- id: s3_lost
+  op: deal.mark_lost
+  input:
+    deal: ${s2_deal.id}
+    reason: budget rejected
+- id: s4_email
+  op: notify.email
+  input:
+    to: director@example.com
+    subject: Auto notification S18

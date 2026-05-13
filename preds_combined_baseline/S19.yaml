@@ -1,0 +1,25 @@
+dsl: v0.3
+flow: eval_aligned_s19
+vars: {}
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: scenario19@example.com
+- id: s2_deal
+  op: deal.create
+  input:
+    title: Scenario Deal S19
+    budget: 48500
+    force_create: true
+- id: s3_quotation
+  op: deal.create_quotation
+  input:
+    deal: ${s2_deal.id}
+    amount: 48500
+- id: s4_email
+  op: notify.email
+  input:
+    to: director@example.com
+    subject: Auto notification S19
+    attach: ${quotation.pdf_path}

@@ -1,0 +1,1621 @@
+id,nl_plain,dsl_yaml,source_id,lang,variant
+RE001,Use this independent CRM example: Execute CRM flow: locate contact or create if missing by phone <phone> and email <email> ; after that open opportunity '<deal_title>' with budget <budget> ; after that plan meeting at <when> [retrieval_example RE001],"dsl: v0.3
+flow: api_contact_deal_meeting
+vars:
+  phone: +7 960 001-10-01
+  email: client.pool01@example.com
+  deal_title: Retrieval Pool Deal 01
+  budget: 107000
+  when: tomorrow
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    phone: ${phone}
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${deal_title}
+    budget: ${budget}
+    tags:
+    - demo
+- id: s3_meeting
+  op: meeting.schedule
+  input:
+    deal:
+      id: ${s2_deal.id}
+    when: ${when}
+",POOL01,en,EN_A
+RR002,"Независимый пример для retrieval: Выполни CRM-сценарий: найди контакт или создай, если не найден by phone <phone> and email <email> ; затем создай сделку '<deal_title>' with budget <budget> ; затем запланируй встречу at <when> [retrieval_example RR002]","dsl: v0.3
+flow: api_contact_deal_meeting
+vars:
+  phone: +7 960 001-10-01
+  email: client.pool01@example.com
+  deal_title: Retrieval Pool Deal 01
+  budget: 107000
+  when: tomorrow
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    phone: ${phone}
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${deal_title}
+    budget: ${budget}
+    tags:
+    - demo
+- id: s3_meeting
+  op: meeting.schedule
+  input:
+    deal:
+      id: ${s2_deal.id}
+    when: ${when}
+",POOL01,ru,RU_A
+RE003,Reference CRM automation pattern: Automate this CRM request: locate contact or create if missing by phone <phone> and email <email> ; after that open opportunity '<title>' with budget <budget> ; after that add follow-up activity 'Follow up with client' due <due> [retrieval_example RE003],"dsl: v0.3
+flow: api_call_task_for_new_deal
+vars:
+  email: client.pool02@example.com
+  phone: +7 960 002-10-02
+  title: Retrieval Pool Deal 02
+  budget: 114000
+  due: tomorrow
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+    phone: ${phone}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - call
+- id: s3_activity
+  op: activity.create
+  input:
+    deal:
+      id: ${s2_deal.id}
+    type: Call
+    summary: Follow up with client
+    due: ${due}
+",POOL02,en,EN_A
+RR004,"Справочный CRM-пример: Собери и выполни API-сценарий в CRM: найди контакт или создай, если не найден by phone <phone> and email <email> ; затем создай сделку '<title>' with budget <budget> ; затем создай активность 'Follow up with client' due <due> [retrieval_example RR004]","dsl: v0.3
+flow: api_call_task_for_new_deal
+vars:
+  email: client.pool02@example.com
+  phone: +7 960 002-10-02
+  title: Retrieval Pool Deal 02
+  budget: 114000
+  due: tomorrow
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+    phone: ${phone}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - call
+- id: s3_activity
+  op: activity.create
+  input:
+    deal:
+      id: ${s2_deal.id}
+    type: Call
+    summary: Follow up with client
+    due: ${due}
+",POOL02,ru,RU_A
+RE005,Separate training example: Build an API CRM scenario: locate contact or create if missing by email <email> ; after that open opportunity '<title>' with budget <budget> ; after that change opportunity stage to <stage> with probability <probability> [retrieval_example RE005],"dsl: v0.3
+flow: api_update_stage_probability
+vars:
+  email: client.pool03@example.com
+  title: Retrieval Pool Deal 03
+  budget: 121000
+  stage: Qualified
+  probability: 60
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - stage
+- id: s3_stage
+  op: deal.update_stage
+  input:
+    deal:
+      id: ${s2_deal.id}
+    stage: ${stage}
+    probability: ${probability}
+",POOL03,en,EN_A
+RR006,"Пример из отдельного retrieval-пула: Автоматизируй следующий запрос в Odoo CRM: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<title>' with budget <budget> ; затем переведи сделку в стадию <stage> с вероятностью <probability> [retrieval_example RR006]","dsl: v0.3
+flow: api_update_stage_probability
+vars:
+  email: client.pool03@example.com
+  title: Retrieval Pool Deal 03
+  budget: 121000
+  stage: Qualified
+  probability: 60
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - stage
+- id: s3_stage
+  op: deal.update_stage
+  input:
+    deal:
+      id: ${s2_deal.id}
+    stage: ${stage}
+    probability: ${probability}
+",POOL03,ru,RU_A
+RE007,Pool-only CRM task: Run this Odoo CRM plan: locate contact or create if missing by email <email> ; after that open opportunity '<title>' with budget <budget> ; after that close opportunity as lost with reason '<reason>' ; after that send email notification to <email_to> [retrieval_example RE007],"dsl: v0.3
+flow: api_mark_lost_and_notify
+vars:
+  email: client.pool04@example.com
+  title: Retrieval Pool Deal 04
+  budget: 128000
+  reason: Price mismatch
+  email_to: audit.pool04@example.com
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - loss
+- id: s3_lost
+  op: deal.mark_lost
+  input:
+    deal:
+      id: ${s2_deal.id}
+    reason: ${reason}
+- id: s4_notify
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+",POOL04,en,EN_A
+RR008,"Шаблон CRM-автоматизации по API: Построй исполняемый CRM-план: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<title>' with budget <budget> ; затем пометь сделку как проигранную с причиной '<reason>' ; затем отправь email-уведомление на <email_to> [retrieval_example RR008]","dsl: v0.3
+flow: api_mark_lost_and_notify
+vars:
+  email: client.pool04@example.com
+  title: Retrieval Pool Deal 04
+  budget: 128000
+  reason: Price mismatch
+  email_to: audit.pool04@example.com
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - loss
+- id: s3_lost
+  op: deal.mark_lost
+  input:
+    deal:
+      id: ${s2_deal.id}
+    reason: ${reason}
+- id: s4_notify
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+",POOL04,ru,RU_A
+RE009,Use this independent CRM example: Execute CRM flow: locate contact or create if missing by email <email> ; after that update contact tags ['VIP'] ; after that open opportunity '<title>' with budget <budget> ; after that add follow-up activity 'Follow up with client' due soon [retrieval_example RE009],"dsl: v0.3
+flow: api_vip_contact_with_note
+vars:
+  email: client.pool05@example.com
+  title: Retrieval Pool Deal 05
+  budget: 135000
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_vip
+  op: contact.update
+  input:
+    contact_id: ${contact.id}
+    tags:
+    - VIP
+- id: s3_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - vip
+- id: s4_note
+  op: activity.create
+  input:
+    deal:
+      id: ${s3_deal.id}
+    type: To Do
+    summary: Follow up with client
+",POOL05,en,EN_A
+RR010,"Независимый пример для retrieval: Выполни CRM-сценарий: найди контакт или создай, если не найден by email <email> ; затем обнови теги контакта ['VIP'] ; затем создай сделку '<title>' with budget <budget> ; затем создай активность 'Follow up with client' due soon [retrieval_example RR010]","dsl: v0.3
+flow: api_vip_contact_with_note
+vars:
+  email: client.pool05@example.com
+  title: Retrieval Pool Deal 05
+  budget: 135000
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_vip
+  op: contact.update
+  input:
+    contact_id: ${contact.id}
+    tags:
+    - VIP
+- id: s3_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - vip
+- id: s4_note
+  op: activity.create
+  input:
+    deal:
+      id: ${s3_deal.id}
+    type: To Do
+    summary: Follow up with client
+",POOL05,ru,RU_A
+RE013,Separate training example: Build an API CRM scenario: locate contact or create if missing by email <email> ; after that open opportunity '<title>' with budget <budget> ; after that create quotation for the deal with amount <budget> ; after that send email notification to <email_to> [retrieval_example RE013],"dsl: v0.3
+flow: api_create_quotation_and_email
+vars:
+  email: client.pool07@example.com
+  email_to: audit.pool07@example.com
+  title: Retrieval Pool Deal 07
+  budget: 149000
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - quote
+- id: s3_quote
+  op: deal.create_quotation
+  input:
+    deal:
+      id: ${s2_deal.id}
+    amount: ${budget}
+- id: s4_send
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+    attach: ${quotation.pdf_path}
+",POOL07,en,EN_A
+RR014,"Пример из отдельного retrieval-пула: Автоматизируй следующий запрос в Odoo CRM: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<title>' with budget <budget> ; затем create quotation for the deal with amount <budget> ; затем отправь email-уведомление на <email_to> [retrieval_example RR014]","dsl: v0.3
+flow: api_create_quotation_and_email
+vars:
+  email: client.pool07@example.com
+  email_to: audit.pool07@example.com
+  title: Retrieval Pool Deal 07
+  budget: 149000
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - quote
+- id: s3_quote
+  op: deal.create_quotation
+  input:
+    deal:
+      id: ${s2_deal.id}
+    amount: ${budget}
+- id: s4_send
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+    attach: ${quotation.pdf_path}
+",POOL07,ru,RU_A
+RE015,Pool-only CRM task: Run this Odoo CRM plan: build sales report for period <period> ; after that send email notification to <email_to> [retrieval_example RE015],"dsl: v0.3
+flow: api_sales_report_csv_path
+vars:
+  period: today
+  email_to: audit.pool08@example.com
+steps:
+- id: s1_report
+  op: report.sales_daily
+  input:
+    period: ${period}
+    group_by: salesperson
+- id: s2_notify
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+    attach: ${report.csv_path}
+",POOL08,en,EN_A
+RR016,Шаблон CRM-автоматизации по API: Построй исполняемый CRM-план: сформируй отчет по продажам за период <period> ; затем отправь email-уведомление на <email_to> [retrieval_example RR016],"dsl: v0.3
+flow: api_sales_report_csv_path
+vars:
+  period: today
+  email_to: audit.pool08@example.com
+steps:
+- id: s1_report
+  op: report.sales_daily
+  input:
+    period: ${period}
+    group_by: salesperson
+- id: s2_notify
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+    attach: ${report.csv_path}
+",POOL08,ru,RU_A
+RE017,Use this independent CRM example: Execute CRM flow: locate contact or create if missing by email <email> ; after that open opportunity '<title>' with budget <budget> ; after that search deals with min budget <min_budget> ; after that add tags ['risk'] to selected deals ; after that add follow-up activity 'Follow up with client' due <due> [retrieval_example RE017],"dsl: v0.3
+flow: api_risk_flow_by_budget
+vars:
+  email: client.pool09@example.com
+  title: Retrieval Pool Deal 09
+  budget: 163000
+  min_budget: 163000
+  due: tomorrow
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - enterprise
+- id: s3_search
+  op: deal.search
+  input:
+    min_budget: ${min_budget}
+- id: s4_tag
+  op: deal.add_tags
+  input:
+    deals: ${deals}
+    tags:
+    - risk
+- id: s5_activity
+  op: activity.create
+  input:
+    deals: ${deals}
+    type: To Do
+    summary: Follow up with client
+    due: ${due}
+",POOL09,en,EN_A
+RR018,"Независимый пример для retrieval: Выполни CRM-сценарий: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<title>' with budget <budget> ; затем найди сделки с минимальным бюджетом <min_budget> ; затем добавь теги ['risk'] to selected deals ; затем создай активность 'Follow up with client' due <due> [retrieval_example RR018]","dsl: v0.3
+flow: api_risk_flow_by_budget
+vars:
+  email: client.pool09@example.com
+  title: Retrieval Pool Deal 09
+  budget: 163000
+  min_budget: 163000
+  due: tomorrow
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - enterprise
+- id: s3_search
+  op: deal.search
+  input:
+    min_budget: ${min_budget}
+- id: s4_tag
+  op: deal.add_tags
+  input:
+    deals: ${deals}
+    tags:
+    - risk
+- id: s5_activity
+  op: activity.create
+  input:
+    deals: ${deals}
+    type: To Do
+    summary: Follow up with client
+    due: ${due}
+",POOL09,ru,RU_A
+RE019,Reference CRM automation pattern: Automate this CRM request: locate contact or create if missing by email <email> ; after that open opportunity '<title_a>' with budget 100000 ; after that open opportunity '<title_b>' with budget 130000 ; after that search deals with min budget 0 ; after that reassign selected deals to salesperson <to_salesperson> [retrieval_example RE019],"dsl: v0.3
+flow: api_reassign_owner_generic
+vars:
+  email: client.pool10@example.com
+  title_a: Retrieval Pool Deal 10 A
+  title_b: Retrieval Pool Deal 10 B
+  to_salesperson: galiy.ivan2003@mail.ru
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal_a
+  op: deal.create
+  input:
+    title: ${title_a}
+    budget: 100000
+    tags:
+    - handover
+- id: s3_deal_b
+  op: deal.create
+  input:
+    title: ${title_b}
+    budget: 130000
+    tags:
+    - handover
+- id: s4_search
+  op: deal.search
+  input:
+    min_budget: 0
+- id: s5_reassign
+  op: deal.update
+  input:
+    deals: ${deals}
+    salesperson: ${to_salesperson}
+",POOL10,en,EN_A
+RR020,"Справочный CRM-пример: Собери и выполни API-сценарий в CRM: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<title_a>' with budget 100000 ; затем создай сделку '<title_b>' with budget 130000 ; затем найди сделки с минимальным бюджетом 0 ; затем переназначь выбранные сделки менеджеру <to_salesperson> [retrieval_example RR020]","dsl: v0.3
+flow: api_reassign_owner_generic
+vars:
+  email: client.pool10@example.com
+  title_a: Retrieval Pool Deal 10 A
+  title_b: Retrieval Pool Deal 10 B
+  to_salesperson: galiy.ivan2003@mail.ru
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal_a
+  op: deal.create
+  input:
+    title: ${title_a}
+    budget: 100000
+    tags:
+    - handover
+- id: s3_deal_b
+  op: deal.create
+  input:
+    title: ${title_b}
+    budget: 130000
+    tags:
+    - handover
+- id: s4_search
+  op: deal.search
+  input:
+    min_budget: 0
+- id: s5_reassign
+  op: deal.update
+  input:
+    deals: ${deals}
+    salesperson: ${to_salesperson}
+",POOL10,ru,RU_A
+RE021,Separate training example: Build an API CRM scenario: locate contact or create if missing by email <email> ; after that open opportunity '<title>' with budget <budget> ; after that add follow-up activity 'Follow up with client' due soon ; after that send email notification to <email_to> [retrieval_example RE021],"dsl: v0.3
+flow: api_followup_with_email
+vars:
+  email: client.pool11@example.com
+  email_to: audit.pool11@example.com
+  title: Retrieval Pool Deal 11
+  budget: 177000
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - followup
+- id: s3_note
+  op: activity.create
+  input:
+    deal:
+      id: ${s2_deal.id}
+    type: To Do
+    summary: Follow up with client
+- id: s4_email
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+",POOL11,en,EN_A
+RR022,"Пример из отдельного retrieval-пула: Автоматизируй следующий запрос в Odoo CRM: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<title>' with budget <budget> ; затем создай активность 'Follow up with client' due soon ; затем отправь email-уведомление на <email_to> [retrieval_example RR022]","dsl: v0.3
+flow: api_followup_with_email
+vars:
+  email: client.pool11@example.com
+  email_to: audit.pool11@example.com
+  title: Retrieval Pool Deal 11
+  budget: 177000
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - followup
+- id: s3_note
+  op: activity.create
+  input:
+    deal:
+      id: ${s2_deal.id}
+    type: To Do
+    summary: Follow up with client
+- id: s4_email
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+",POOL11,ru,RU_A
+RE023,Pool-only CRM task: Run this Odoo CRM plan: locate contact or create if missing by email <email> ; after that open opportunity '<title>' with budget <budget> ; after that search deals with min budget <min_budget> ; after that add tags ['urgent'] to selected deals ; after that add follow-up activity 'Follow up with client' due <due> [retrieval_example RE023],"dsl: v0.3
+flow: api_urgent_via_search
+vars:
+  email: client.pool12@example.com
+  title: Retrieval Pool Deal 12
+  budget: 184000
+  min_budget: 184000
+  due: tomorrow
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - pipeline
+- id: s3_find
+  op: deal.search
+  input:
+    min_budget: ${min_budget}
+- id: s4_tag
+  op: deal.add_tags
+  input:
+    deals: ${deals}
+    tags:
+    - urgent
+- id: s5_task
+  op: activity.create
+  input:
+    deals: ${deals}
+    type: Call
+    summary: Follow up with client
+    due: ${due}
+",POOL12,en,EN_A
+RR024,"Шаблон CRM-автоматизации по API: Построй исполняемый CRM-план: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<title>' with budget <budget> ; затем найди сделки с минимальным бюджетом <min_budget> ; затем добавь теги ['urgent'] to selected deals ; затем создай активность 'Follow up with client' due <due> [retrieval_example RR024]","dsl: v0.3
+flow: api_urgent_via_search
+vars:
+  email: client.pool12@example.com
+  title: Retrieval Pool Deal 12
+  budget: 184000
+  min_budget: 184000
+  due: tomorrow
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - pipeline
+- id: s3_find
+  op: deal.search
+  input:
+    min_budget: ${min_budget}
+- id: s4_tag
+  op: deal.add_tags
+  input:
+    deals: ${deals}
+    tags:
+    - urgent
+- id: s5_task
+  op: activity.create
+  input:
+    deals: ${deals}
+    type: Call
+    summary: Follow up with client
+    due: ${due}
+",POOL12,ru,RU_A
+RE025,Use this independent CRM example: Execute CRM flow: create company contact '<company_name>' ; after that update contact tags ['b2b'] ; after that open opportunity '<deal_title>' with budget <budget> [retrieval_example RE025],"dsl: v0.3
+flow: api_contact_then_deal
+vars:
+  company_name: Retrieval Pool Company 13
+  deal_title: Retrieval Pool Deal 13
+  budget: 191000
+steps:
+- id: s1_contact
+  op: contact.create
+  input:
+    name: ${company_name}
+- id: s2_contact_tag
+  op: contact.update
+  input:
+    contact_id: ${s1_contact.id}
+    tags:
+    - b2b
+- id: s3_deal
+  op: deal.create
+  input:
+    title: ${deal_title}
+    budget: ${budget}
+    tags:
+    - b2b
+",POOL13,en,EN_A
+RR026,Независимый пример для retrieval: Выполни CRM-сценарий: create company contact '<company_name>' ; затем обнови теги контакта ['b2b'] ; затем создай сделку '<deal_title>' with budget <budget> [retrieval_example RR026],"dsl: v0.3
+flow: api_contact_then_deal
+vars:
+  company_name: Retrieval Pool Company 13
+  deal_title: Retrieval Pool Deal 13
+  budget: 191000
+steps:
+- id: s1_contact
+  op: contact.create
+  input:
+    name: ${company_name}
+- id: s2_contact_tag
+  op: contact.update
+  input:
+    contact_id: ${s1_contact.id}
+    tags:
+    - b2b
+- id: s3_deal
+  op: deal.create
+  input:
+    title: ${deal_title}
+    budget: ${budget}
+    tags:
+    - b2b
+",POOL13,ru,RU_A
+RE027,Reference CRM automation pattern: Automate this CRM request: locate contact or create if missing by email <email> ; after that open opportunity '<title>' with budget <budget> ; after that change opportunity stage to New with probability 100 ; after that check watchdog condition for deal status [retrieval_example RE027],"dsl: v0.3
+flow: api_watchdog_after_prob_100
+vars:
+  email: client.pool14@example.com
+  title: Retrieval Pool Deal 14
+  budget: 198000
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - won
+- id: s3_stage
+  op: deal.update_stage
+  input:
+    deal:
+      id: ${s2_deal.id}
+    stage: New
+    probability: 100
+- id: s4_watch
+  op: watchdog
+  input:
+    deal:
+      id: ${s2_deal.id}
+    condition: deal.status == 'won'
+",POOL14,en,EN_A
+RR028,"Справочный CRM-пример: Собери и выполни API-сценарий в CRM: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<title>' with budget <budget> ; затем переведи сделку в стадию New с вероятностью 100 ; затем check watchdog condition for deal status [retrieval_example RR028]","dsl: v0.3
+flow: api_watchdog_after_prob_100
+vars:
+  email: client.pool14@example.com
+  title: Retrieval Pool Deal 14
+  budget: 198000
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - won
+- id: s3_stage
+  op: deal.update_stage
+  input:
+    deal:
+      id: ${s2_deal.id}
+    stage: New
+    probability: 100
+- id: s4_watch
+  op: watchdog
+  input:
+    deal:
+      id: ${s2_deal.id}
+    condition: deal.status == 'won'
+",POOL14,ru,RU_A
+RE029,Separate training example: Build an API CRM scenario: locate contact or create if missing by email <email> ; after that open opportunity '<title>' with budget <budget> ; after that change opportunity stage to New with probability 100 ; after that plan meeting at <when> ; after that add follow-up activity 'Follow up with client' due soon [retrieval_example RE029],"dsl: v0.3
+flow: api_post_win_followup
+vars:
+  email: client.pool15@example.com
+  title: Retrieval Pool Deal 15
+  budget: 205000
+  when: tomorrow
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - core
+- id: s3_prob100
+  op: deal.update_stage
+  input:
+    deal:
+      id: ${s2_deal.id}
+    stage: New
+    probability: 100
+- id: s4_meeting
+  op: meeting.schedule
+  input:
+    deal:
+      id: ${s2_deal.id}
+    when: ${when}
+- id: s5_note
+  op: activity.create
+  input:
+    deal:
+      id: ${s2_deal.id}
+    type: To Do
+    summary: Follow up with client
+",POOL15,en,EN_A
+RR030,"Пример из отдельного retrieval-пула: Автоматизируй следующий запрос в Odoo CRM: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<title>' with budget <budget> ; затем переведи сделку в стадию New с вероятностью 100 ; затем запланируй встречу at <when> ; затем создай активность 'Follow up with client' due soon [retrieval_example RR030]","dsl: v0.3
+flow: api_post_win_followup
+vars:
+  email: client.pool15@example.com
+  title: Retrieval Pool Deal 15
+  budget: 205000
+  when: tomorrow
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - core
+- id: s3_prob100
+  op: deal.update_stage
+  input:
+    deal:
+      id: ${s2_deal.id}
+    stage: New
+    probability: 100
+- id: s4_meeting
+  op: meeting.schedule
+  input:
+    deal:
+      id: ${s2_deal.id}
+    when: ${when}
+- id: s5_note
+  op: activity.create
+  input:
+    deal:
+      id: ${s2_deal.id}
+    type: To Do
+    summary: Follow up with client
+",POOL15,ru,RU_A
+RE031,Pool-only CRM task: Run this Odoo CRM plan: locate contact or create if missing by email <email> ; after that open opportunity '<title>' with budget <budget> ; after that search stale deals older than <days_inactive> days ; after that add follow-up activity 'Follow up with client' due <due> [retrieval_example RE031],"dsl: v0.3
+flow: api_search_stale_and_call
+vars:
+  email: client.pool16@example.com
+  title: Retrieval Pool Deal 16
+  budget: 212000
+  days_inactive: 0
+  stages: Qualified
+  due: tomorrow
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - stale
+- id: s3_stale
+  op: deal.search_stale
+  input:
+    days_inactive: ${days_inactive}
+    stages: ${stages}
+- id: s4_call
+  op: activity.create
+  input:
+    deals: ${deals}
+    type: Call
+    summary: Follow up with client
+    due: ${due}
+",POOL16,en,EN_A
+RR032,"Шаблон CRM-автоматизации по API: Построй исполняемый CRM-план: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<title>' with budget <budget> ; затем найди неактивные сделки старше чем <days_inactive> days ; затем создай активность 'Follow up with client' due <due> [retrieval_example RR032]","dsl: v0.3
+flow: api_search_stale_and_call
+vars:
+  email: client.pool16@example.com
+  title: Retrieval Pool Deal 16
+  budget: 212000
+  days_inactive: 0
+  stages: Qualified
+  due: tomorrow
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - stale
+- id: s3_stale
+  op: deal.search_stale
+  input:
+    days_inactive: ${days_inactive}
+    stages: ${stages}
+- id: s4_call
+  op: activity.create
+  input:
+    deals: ${deals}
+    type: Call
+    summary: Follow up with client
+    due: ${due}
+",POOL16,ru,RU_A
+RE033,Use this independent CRM example: Execute CRM flow: locate contact or create if missing by email <email> ; after that open opportunity '<title>' with budget <budget> ; after that search stale deals older than <days_inactive> days ; after that reassign selected deals to salesperson <to_salesperson> [retrieval_example RE033],"dsl: v0.3
+flow: api_stale_and_reassign
+vars:
+  email: client.pool17@example.com
+  title: Retrieval Pool Deal 17
+  budget: 219000
+  days_inactive: 0
+  to_salesperson: galiy.ivan2003@mail.ru
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - owner
+- id: s3_stale
+  op: deal.search_stale
+  input:
+    days_inactive: ${days_inactive}
+    stages: []
+- id: s4_update
+  op: deal.update
+  input:
+    deals: ${deals}
+    salesperson: ${to_salesperson}
+",POOL17,en,EN_A
+RR034,"Независимый пример для retrieval: Выполни CRM-сценарий: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<title>' with budget <budget> ; затем найди неактивные сделки старше чем <days_inactive> days ; затем переназначь выбранные сделки менеджеру <to_salesperson> [retrieval_example RR034]","dsl: v0.3
+flow: api_stale_and_reassign
+vars:
+  email: client.pool17@example.com
+  title: Retrieval Pool Deal 17
+  budget: 219000
+  days_inactive: 0
+  to_salesperson: galiy.ivan2003@mail.ru
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - owner
+- id: s3_stale
+  op: deal.search_stale
+  input:
+    days_inactive: ${days_inactive}
+    stages: []
+- id: s4_update
+  op: deal.update
+  input:
+    deals: ${deals}
+    salesperson: ${to_salesperson}
+",POOL17,ru,RU_A
+RE035,Reference CRM automation pattern: Automate this CRM request: locate contact or create if missing by email <email> ; after that open opportunity '<deal_title>' with budget <budget> ; after that close opportunity as lost with reason '<reason>' ; after that send email notification to <email_to> [retrieval_example RE035],"dsl: v0.3
+flow: api_mark_lost_by_title
+vars:
+  email: client.pool18@example.com
+  deal_title: Retrieval Pool Deal 18
+  budget: 226000
+  reason: Price mismatch
+  email_to: audit.pool18@example.com
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${deal_title}
+    budget: ${budget}
+    tags:
+    - loss
+- id: s3_lost
+  op: deal.mark_lost
+  input:
+    deal:
+      by_title: ${deal_title}
+    reason: ${reason}
+- id: s4_notify
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+",POOL18,en,EN_A
+RR036,"Справочный CRM-пример: Собери и выполни API-сценарий в CRM: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<deal_title>' with budget <budget> ; затем пометь сделку как проигранную с причиной '<reason>' ; затем отправь email-уведомление на <email_to> [retrieval_example RR036]","dsl: v0.3
+flow: api_mark_lost_by_title
+vars:
+  email: client.pool18@example.com
+  deal_title: Retrieval Pool Deal 18
+  budget: 226000
+  reason: Price mismatch
+  email_to: audit.pool18@example.com
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${deal_title}
+    budget: ${budget}
+    tags:
+    - loss
+- id: s3_lost
+  op: deal.mark_lost
+  input:
+    deal:
+      by_title: ${deal_title}
+    reason: ${reason}
+- id: s4_notify
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+",POOL18,ru,RU_A
+RE039,Pool-only CRM task: Run this Odoo CRM plan: build sales report for period <period> ; after that export report in csv format ; after that send email notification to <email_to> [retrieval_example RE039],"dsl: v0.3
+flow: api_report_export_csv
+vars:
+  period: today
+  email_to: audit.pool20@example.com
+steps:
+- id: s1_report
+  op: report.sales_daily
+  input:
+    period: ${period}
+    group_by: salesperson
+- id: s2_export
+  op: report.export
+  input:
+    format: csv
+- id: s3_send
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+    attach: ${file.path}
+",POOL20,en,EN_A
+RR040,Шаблон CRM-автоматизации по API: Построй исполняемый CRM-план: сформируй отчет по продажам за период <period> ; затем export report in csv format ; затем отправь email-уведомление на <email_to> [retrieval_example RR040],"dsl: v0.3
+flow: api_report_export_csv
+vars:
+  period: today
+  email_to: audit.pool20@example.com
+steps:
+- id: s1_report
+  op: report.sales_daily
+  input:
+    period: ${period}
+    group_by: salesperson
+- id: s2_export
+  op: report.export
+  input:
+    format: csv
+- id: s3_send
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+    attach: ${file.path}
+",POOL20,ru,RU_A
+RE041,Use this independent CRM example: Execute CRM flow: build sales report for period <period> ; after that export report in pdf format ; after that send email notification to <email_to> [retrieval_example RE041],"dsl: v0.3
+flow: api_report_export_pdf
+vars:
+  period: today
+  email_to: audit.pool21@example.com
+steps:
+- id: s1_report
+  op: report.sales_daily
+  input:
+    period: ${period}
+    group_by: salesperson
+- id: s2_export
+  op: report.export
+  input:
+    format: pdf
+- id: s3_send
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+    attach: ${file.path}
+",POOL21,en,EN_A
+RR042,Независимый пример для retrieval: Выполни CRM-сценарий: сформируй отчет по продажам за период <period> ; затем export report in pdf format ; затем отправь email-уведомление на <email_to> [retrieval_example RR042],"dsl: v0.3
+flow: api_report_export_pdf
+vars:
+  period: today
+  email_to: audit.pool21@example.com
+steps:
+- id: s1_report
+  op: report.sales_daily
+  input:
+    period: ${period}
+    group_by: salesperson
+- id: s2_export
+  op: report.export
+  input:
+    format: pdf
+- id: s3_send
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+    attach: ${file.path}
+",POOL21,ru,RU_A
+RE043,Reference CRM automation pattern: Automate this CRM request: locate contact or create if missing by email <email> ; after that open opportunity '<deal_title>' with budget <budget> ; after that plan meeting at <when> [retrieval_example RE043],"dsl: v0.3
+flow: api_meeting_by_title
+vars:
+  email: client.pool22@example.com
+  deal_title: Retrieval Pool Deal 22
+  budget: 254000
+  when: tomorrow
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${deal_title}
+    budget: ${budget}
+    tags:
+    - meeting
+- id: s3_meeting
+  op: meeting.schedule
+  input:
+    deal:
+      by_title: ${deal_title}
+    when: ${when}
+",POOL22,en,EN_A
+RR044,"Справочный CRM-пример: Собери и выполни API-сценарий в CRM: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<deal_title>' with budget <budget> ; затем запланируй встречу at <when> [retrieval_example RR044]","dsl: v0.3
+flow: api_meeting_by_title
+vars:
+  email: client.pool22@example.com
+  deal_title: Retrieval Pool Deal 22
+  budget: 254000
+  when: tomorrow
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${deal_title}
+    budget: ${budget}
+    tags:
+    - meeting
+- id: s3_meeting
+  op: meeting.schedule
+  input:
+    deal:
+      by_title: ${deal_title}
+    when: ${when}
+",POOL22,ru,RU_A
+RE045,Separate training example: Build an API CRM scenario: locate contact or create if missing by email <email> ; after that open opportunity 'Retrieval Pool Low 23' with budget 100000 ; after that open opportunity 'Retrieval Pool High 23' with budget 450000 ; after that search deals with min budget <min_budget> ; after that reassign selected deals to salesperson <salesperson> [retrieval_example RE045],"dsl: v0.3
+flow: api_search_and_reassign_by_budget
+vars:
+  email: client.pool23@example.com
+  min_budget: 261000
+  salesperson: galiy.ivan2003@mail.ru
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal_low
+  op: deal.create
+  input:
+    title: Budget low
+    budget: 100000
+    tags:
+    - mix
+- id: s3_deal_high
+  op: deal.create
+  input:
+    title: Budget high
+    budget: 450000
+    tags:
+    - mix
+- id: s4_search
+  op: deal.search
+  input:
+    min_budget: ${min_budget}
+- id: s5_update
+  op: deal.update
+  input:
+    deals: ${deals}
+    salesperson: ${salesperson}
+",POOL23,en,EN_A
+RR046,"Пример из отдельного retrieval-пула: Автоматизируй следующий запрос в Odoo CRM: найди контакт или создай, если не найден by email <email> ; затем создай сделку 'Retrieval Pool Low 23' with budget 100000 ; затем создай сделку 'Retrieval Pool High 23' with budget 450000 ; затем найди сделки с минимальным бюджетом <min_budget> ; затем переназначь выбранные сделки менеджеру <salesperson> [retrieval_example RR046]","dsl: v0.3
+flow: api_search_and_reassign_by_budget
+vars:
+  email: client.pool23@example.com
+  min_budget: 261000
+  salesperson: galiy.ivan2003@mail.ru
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal_low
+  op: deal.create
+  input:
+    title: Budget low
+    budget: 100000
+    tags:
+    - mix
+- id: s3_deal_high
+  op: deal.create
+  input:
+    title: Budget high
+    budget: 450000
+    tags:
+    - mix
+- id: s4_search
+  op: deal.search
+  input:
+    min_budget: ${min_budget}
+- id: s5_update
+  op: deal.update
+  input:
+    deals: ${deals}
+    salesperson: ${salesperson}
+",POOL23,ru,RU_A
+RE047,"Pool-only CRM task: Run this Odoo CRM plan: locate contact or create if missing by email <email> ; after that update contact tags ['reference', 'newsletter'] ; after that send email notification to <email_to> [retrieval_example RE047]","dsl: v0.3
+flow: api_contact_tags_and_notify
+vars:
+  email: client.pool24@example.com
+  email_to: audit.pool24@example.com
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_update
+  op: contact.update
+  input:
+    contact_id: ${contact.id}
+    tags:
+    - reference
+    - newsletter
+- id: s3_notify
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+",POOL24,en,EN_A
+RR048,"Шаблон CRM-автоматизации по API: Построй исполняемый CRM-план: найди контакт или создай, если не найден by email <email> ; затем обнови теги контакта ['reference', 'newsletter'] ; затем отправь email-уведомление на <email_to> [retrieval_example RR048]","dsl: v0.3
+flow: api_contact_tags_and_notify
+vars:
+  email: client.pool24@example.com
+  email_to: audit.pool24@example.com
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_update
+  op: contact.update
+  input:
+    contact_id: ${contact.id}
+    tags:
+    - reference
+    - newsletter
+- id: s3_notify
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+",POOL24,ru,RU_A
+RE049,Use this independent CRM example: Execute CRM flow: locate contact or create if missing by email <email> ; after that open opportunity '<title>' with budget <budget> ; after that search stale deals older than <days_inactive> days ; after that add follow-up activity 'Follow up with client' due <due> [retrieval_example RE049],"dsl: v0.3
+flow: api_stale_then_activity
+vars:
+  email: client.pool25@example.com
+  title: Retrieval Pool Deal 25
+  budget: 275000
+  days_inactive: 0
+  due: tomorrow
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - stale
+- id: s3_stale
+  op: deal.search_stale
+  input:
+    days_inactive: ${days_inactive}
+    stages: []
+- id: s4_activity
+  op: activity.create
+  input:
+    deals: ${deals}
+    type: Call
+    summary: Follow up with client
+    due: ${due}
+",POOL25,en,EN_A
+RR050,"Независимый пример для retrieval: Выполни CRM-сценарий: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<title>' with budget <budget> ; затем найди неактивные сделки старше чем <days_inactive> days ; затем создай активность 'Follow up with client' due <due> [retrieval_example RR050]","dsl: v0.3
+flow: api_stale_then_activity
+vars:
+  email: client.pool25@example.com
+  title: Retrieval Pool Deal 25
+  budget: 275000
+  days_inactive: 0
+  due: tomorrow
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - stale
+- id: s3_stale
+  op: deal.search_stale
+  input:
+    days_inactive: ${days_inactive}
+    stages: []
+- id: s4_activity
+  op: activity.create
+  input:
+    deals: ${deals}
+    type: Call
+    summary: Follow up with client
+    due: ${due}
+",POOL25,ru,RU_A
+RE053,"Separate training example: Build an API CRM scenario: locate contact or create if missing by email <email> ; after that open opportunity '<title>' with budget <budget> ; after that add tags ['risk', 'followup'] to selected deals ; after that send email notification to <email_to> [retrieval_example RE053]","dsl: v0.3
+flow: api_add_tags_single_deal
+vars:
+  email: client.pool27@example.com
+  title: Retrieval Pool Deal 27
+  budget: 289000
+  email_to: audit.pool27@example.com
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - base
+- id: s3_tags
+  op: deal.add_tags
+  input:
+    deals: ${deals}
+    tags:
+    - risk
+    - followup
+- id: s4_email
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+",POOL27,en,EN_A
+RR054,"Пример из отдельного retrieval-пула: Автоматизируй следующий запрос в Odoo CRM: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<title>' with budget <budget> ; затем добавь теги ['risk', 'followup'] to selected deals ; затем отправь email-уведомление на <email_to> [retrieval_example RR054]","dsl: v0.3
+flow: api_add_tags_single_deal
+vars:
+  email: client.pool27@example.com
+  title: Retrieval Pool Deal 27
+  budget: 289000
+  email_to: audit.pool27@example.com
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - base
+- id: s3_tags
+  op: deal.add_tags
+  input:
+    deals: ${deals}
+    tags:
+    - risk
+    - followup
+- id: s4_email
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+",POOL27,ru,RU_A
+RE057,Use this independent CRM example: Execute CRM flow: locate contact or create if missing by email <email> ; after that open opportunity '<title>' with budget <budget> ; after that add follow-up activity 'Follow up with client' due <due> ; after that create quotation for the deal with amount <budget> ; after that send email notification to <email_to> [retrieval_example RE057],"dsl: v0.3
+flow: api_full_commercial_cycle
+vars:
+  email: client.pool29@example.com
+  title: Retrieval Pool Deal 29
+  budget: 380000
+  due: tomorrow
+  email_to: audit.pool29@example.com
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - cycle
+- id: s3_activity
+  op: activity.create
+  input:
+    deal:
+      id: ${s2_deal.id}
+    type: To Do
+    summary: Follow up with client
+    due: ${due}
+- id: s4_quote
+  op: deal.create_quotation
+  input:
+    deal:
+      id: ${s2_deal.id}
+    amount: ${budget}
+- id: s5_email
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+    attach: ${quotation.pdf_path}
+",POOL29,en,EN_A
+RR058,"Независимый пример для retrieval: Выполни CRM-сценарий: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<title>' with budget <budget> ; затем создай активность 'Follow up with client' due <due> ; затем create quotation for the deal with amount <budget> ; затем отправь email-уведомление на <email_to> [retrieval_example RR058]","dsl: v0.3
+flow: api_full_commercial_cycle
+vars:
+  email: client.pool29@example.com
+  title: Retrieval Pool Deal 29
+  budget: 380000
+  due: tomorrow
+  email_to: audit.pool29@example.com
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - cycle
+- id: s3_activity
+  op: activity.create
+  input:
+    deal:
+      id: ${s2_deal.id}
+    type: To Do
+    summary: Follow up with client
+    due: ${due}
+- id: s4_quote
+  op: deal.create_quotation
+  input:
+    deal:
+      id: ${s2_deal.id}
+    amount: ${budget}
+- id: s5_email
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+    attach: ${quotation.pdf_path}
+",POOL29,ru,RU_A
+RE059,Reference CRM automation pattern: Automate this CRM request: locate contact or create if missing by email <email> ; after that open opportunity '<title>' with budget <budget> ; after that change opportunity stage to New with probability 40 ; after that check watchdog condition for deal status ; after that send email notification to <email_to> [retrieval_example RE059],"dsl: v0.3
+flow: api_stage_watch_notify
+vars:
+  email: client.pool30@example.com
+  title: Retrieval Pool Deal 30
+  budget: 310000
+  email_to: audit.pool30@example.com
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - watch
+- id: s3_stage
+  op: deal.update_stage
+  input:
+    deal:
+      id: ${s2_deal.id}
+    stage: New
+    probability: 40
+- id: s4_watch
+  op: watchdog
+  input:
+    deal:
+      id: ${s2_deal.id}
+    condition: deal.status == 'won'
+- id: s5_notify
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+",POOL30,en,EN_A
+RR060,"Справочный CRM-пример: Собери и выполни API-сценарий в CRM: найди контакт или создай, если не найден by email <email> ; затем создай сделку '<title>' with budget <budget> ; затем переведи сделку в стадию New с вероятностью 40 ; затем check watchdog condition for deal status ; затем отправь email-уведомление на <email_to> [retrieval_example RR060]","dsl: v0.3
+flow: api_stage_watch_notify
+vars:
+  email: client.pool30@example.com
+  title: Retrieval Pool Deal 30
+  budget: 310000
+  email_to: audit.pool30@example.com
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: ${email}
+- id: s2_deal
+  op: deal.create
+  input:
+    title: ${title}
+    budget: ${budget}
+    tags:
+    - watch
+- id: s3_stage
+  op: deal.update_stage
+  input:
+    deal:
+      id: ${s2_deal.id}
+    stage: New
+    probability: 40
+- id: s4_watch
+  op: watchdog
+  input:
+    deal:
+      id: ${s2_deal.id}
+    condition: deal.status == 'won'
+- id: s5_notify
+  op: notify.email
+  input:
+    to: ${email_to}
+    subject: Automated notification
+",POOL30,ru,RU_A

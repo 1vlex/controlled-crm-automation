@@ -1,0 +1,8 @@
+pandas
+requests
+PyYAML
+tqdm
+fastapi
+uvicorn
+pydantic
+reportlab

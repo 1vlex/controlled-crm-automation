@@ -1,0 +1,14 @@
+dsl: v0.3
+flow: manual_template
+vars: {}
+steps:
+- id: search_deals
+  op: deal.search
+  input:
+    min_budget: 20000
+- id: add_tags
+  op: deal.add_tags
+  input:
+    deals: ${deals}
+    tags:
+    - high_budget_batch

@@ -1,0 +1,28 @@
+dsl: v0.3
+flow: manual_template
+vars: {}
+steps:
+- id: create_company
+  op: contact.create
+  input:
+    name: Manual QA Furnitures Group
+- id: create_deal
+  op: deal.create
+  input:
+    title: Manual QA Deal Gamma
+    budget: 51000
+    tags:
+    - manual_test
+    - gamma
+    force_create: true
+- id: update_stage
+  op: deal.update_stage
+  input:
+    deal: ${create_deal.id}
+    stage: Won
+    probability: 100
+- id: watchdog_check
+  op: watchdog
+  input:
+    deal: ${create_deal.id}
+    condition: deal.status == 'won'

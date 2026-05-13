@@ -1,0 +1,27 @@
+dsl: v0.3
+flow: manual_template
+vars: {}
+steps:
+- id: create_fixture
+  op: deal.create
+  input:
+    title: Manual QA Deal Alpha
+    budget: 42000
+    force_create: true
+- id: search_deal
+  op: deal.search
+  input:
+    title: Manual QA Deel Alfa
+- id: update_stage
+  op: deal.update_stage
+  input:
+    deal: ${search_deal.deal_id}
+    stage: Qualifed
+    probability: 40
+- id: create_activity
+  op: activity.create
+  input:
+    deal: ${search_deal.deal_id}
+    type: Call
+    summary: Collect requirements call
+    due: tomorrow 10:30

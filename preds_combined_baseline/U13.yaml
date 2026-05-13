@@ -1,0 +1,21 @@
+dsl: v0.3
+flow: manual_template
+vars: {}
+steps:
+- id: find_or_create_contact
+  op: contact.find_or_create
+  input:
+    email: qa.beta@example.com
+- id: update_contact
+  op: contact.update
+  input:
+    contact_id: ${find_or_create_contact.id}
+    tags:
+    - manual_test
+    - beta
+- id: create_deal
+  op: deal.create
+  input:
+    title: Manual QA Deal Beta
+    budget: 38000
+    force_create: true

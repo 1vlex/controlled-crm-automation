@@ -1,0 +1,29 @@
+dsl: v0.3
+flow: eval_aligned_s10
+vars: {}
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: scenario10@example.com
+- id: s2_deal
+  op: deal.create
+  input:
+    title: Scenario Deal S10 A
+    budget: 100000
+    force_create: true
+- id: s3_deal
+  op: deal.create
+  input:
+    title: Scenario Deal S10 B
+    budget: 130000
+    force_create: true
+- id: s4_search_deals
+  op: deal.search
+  input:
+    min_budget: 0
+- id: s5_owner
+  op: deal.update
+  input:
+    deals: ${deals}
+    salesperson: galiy.ivan2003@mail.r

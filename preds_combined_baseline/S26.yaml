@@ -1,0 +1,25 @@
+dsl: v0.3
+flow: eval_aligned_s26
+vars: {}
+steps:
+- id: s1_contact
+  op: contact.find_or_create
+  input:
+    email: scenario26@example.com
+- id: s2_deal
+  op: deal.create
+  input:
+    title: Scenario Deal S26
+    budget: 59000
+    force_create: true
+- id: s3_stage
+  op: deal.update_stage
+  input:
+    deal: ${s2_deal.id}
+    stage: Wonn
+    probability: 100
+- id: s4_watchdog
+  op: watchdog
+  input:
+    deal: ${s2_deal.id}
+    condition: deal.status == 'won'

@@ -1,0 +1,10 @@
+dsl: v0.3
+flow: manual_template
+vars: {}
+steps:
+- id: create_deal
+  op: deal.create
+  input:
+    title: 'Global Solutions: Furnitures'
+    budget: 4100
+    force_create: true

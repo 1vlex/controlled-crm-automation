@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:15
+    env_file:
+      - .env
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER:-odoo}\" -d \"$${POSTGRES_DB:-postgres}\""]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  odoo:
+    build: .
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8069:8069"
+    command:
+      - /bin/bash
+      - -lc
+      - |
+        cat > /tmp/odoo.conf <<EOF
+        [options]
+        admin_passwd = $${ODOO_MASTER_PASSWORD:?ODOO_MASTER_PASSWORD is required}
+        db_host = $${ODOO_DB_HOST:-db}
+        db_port = $${ODOO_DB_PORT:-5432}
+        db_user = $${POSTGRES_USER:?POSTGRES_USER is required}
+        db_password = $${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+        addons_path = /usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons
+        xmlrpc_port = 8069
+        EOF
+        exec odoo -c /tmp/odoo.conf
+    restart: unless-stopped
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./addons:/mnt/extra-addons
+
+volumes:
+  odoo-web-data:
+  odoo-db-data:

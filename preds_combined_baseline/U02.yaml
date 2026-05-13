@@ -1,0 +1,27 @@
+dsl: v0.3
+flow: manual_template
+vars: {}
+steps:
+- id: search_deal
+  op: deal.search
+  input:
+    title: 'Global Solutons: Furnitures'
+- id: update_stage
+  op: deal.update_stage
+  input:
+    deal: ${search_deal.deal_id}
+    stage: Proposotion
+    probability: 70
+- id: assign_owner
+  op: deal.update
+  input:
+    deals:
+    - ${search_deal.deal_id}
+    salesperson: galiy.ivan2003@mail.r
+- id: create_activity
+  op: activity.create
+  input:
+    deal: ${search_deal.deal_id}
+    type: Call
+    summary: Self heal typo check
+    due: tomorrow 16:00

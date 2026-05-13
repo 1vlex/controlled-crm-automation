@@ -1,0 +1,18 @@
+dsl: v0.3
+flow: manual_template
+vars: {}
+steps:
+- id: report_sales_daily
+  op: report.sales_daily
+  input:
+    period: today
+- id: export_report_pdf
+  op: report.export
+  input:
+    format: pdf
+- id: notify_email_pdf
+  op: notify.email
+  input:
+    to: director@example.com
+    subject: Daily sales pdf
+    attach: ${report.path}

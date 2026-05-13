@@ -1,0 +1,18 @@
+dsl: v0.3
+flow: manual_template
+vars: {}
+steps:
+- id: search_deal
+  op: deal.search
+  input:
+    title: Office Design and Architecture
+- id: create_quotation
+  op: deal.create_quotation
+  input:
+    deal: ${search_deal.deal_id}
+- id: send_notification
+  op: notify.email
+  input:
+    to: director@example.com
+    subject: Quotation for Office Design and Architecture
+    attach: ${quotation.pdf_path}

@@ -1,0 +1,23 @@
+dsl: v0.3
+flow: manual_template
+vars: {}
+steps:
+- id: search_deal
+  op: deal.search
+  input:
+    title: 'DeltaPC: 10 Computer Deskz'
+- id: add_tags
+  op: deal.add_tags
+  input:
+    deals:
+    - ${search_deal.deal_id}
+    tags:
+    - renewal
+    - qa_check
+- id: create_activity
+  op: activity.create
+  input:
+    deal: ${search_deal.deal_id}
+    type: To Do
+    summary: Prepare revised offer
+    due: tomorrow 11:00

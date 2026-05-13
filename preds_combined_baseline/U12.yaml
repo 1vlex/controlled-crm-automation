@@ -1,0 +1,17 @@
+dsl: v0.3
+flow: manual_template
+vars: {}
+steps:
+- id: create_company
+  op: contact.create
+  input:
+    name: Manual QA Interiors LLC
+- id: create_deal
+  op: deal.create
+  input:
+    title: Manual QA Deal Alpha
+    budget: 42000
+    tags:
+    - manual_test
+    - alpha
+    force_create: true

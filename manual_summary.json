@@ -1,0 +1,11 @@
+{
+  "manual_review_path": "manual_review_all_scenarios.csv",
+  "designed_self_healing_required": 21,
+  "designed_self_healing_required_rate": 0.3621,
+  "actual_self_healing_scenarios": 21,
+  "actual_self_healing_scenario_rate": 0.3621,
+  "manual_strict_task_success_rate": 0.9483,
+  "manual_entity_resolution_accuracy": 0.9655,
+  "manual_wrong_object_success_rate": 0.0,
+  "manual_postcondition_satisfaction_rate": 0.9483
+}
